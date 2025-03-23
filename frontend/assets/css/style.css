@@ -2598,7 +2598,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 .news .blog-post .post-content {
   position: relative;
-  padding: 30px 30px 25px 30px;
+  padding: 10px 30px 25px 30px;
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: #e5e5e5;
@@ -3166,5 +3166,22 @@ ul.pagination .active a {
 .contact-form button {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+#user-type {
+  width: 100%; /* Ensure it takes up full width */
+  max-width: 100%; /* Prevents it from overflowing */
+  height: 48px; /* Override the height set by the previous CSS */
+  box-sizing: border-box; /* Prevents padding from affecting width */
+}
+
+/* Margin adjustment for company name field to prevent overlap */
+#company-name-field {
+  margin-top: 20px; /* Ensure space between fields */
+}
+
+/* Margin for inputs to prevent overlap in smaller containers */
+#company-name, #first-name, #last-name, #phone, #email {
+  margin-bottom: 20px; /* Adjusting margins for consistency */
 }
 /*# sourceMappingURL=style.css.map */
