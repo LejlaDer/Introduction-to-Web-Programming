@@ -1,0 +1,52 @@
+<section class="section contact-form">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h3>Make An <span class="alternate">Account</span></h3>
+					<p>Please register as either a user or a company/organizer.</p>
+				</div>
+			</div>
+		</div>
+		<form action="#" class="row">
+			<div class="col-md-6">
+				<input type="text" class="form-control main" name="first-name" id="first-name" placeholder="First Name" required>
+			</div>
+			<div class="col-md-6">
+				<input type="text" class="form-control main" name="last-name" id="last-name" placeholder="Last Name" required>
+			</div>
+			<div class="col-md-6">
+				<input type="tel" class="form-control main" name="phone" id="phone" placeholder="Phone Number" required>
+			</div>
+			<div class="col-md-6">
+				<input type="email" class="form-control main" name="email" id="email" placeholder="Email Address" required>
+			</div>
+			<div class="col-md-12">
+				<label for="user-type">Are you a User or a Company/Organizer?</label>
+				<select class="form-control main" name="user-type" id="user-type" required>
+					<option value="user">User</option>
+					<option value="company">Company/Organizer</option>
+				</select>
+			</div>
+			<div class="col-md-12" id="company-name-field" style="display:none;">
+				<label for="company-name">Company Name</label> <!-- Add label here -->
+				<input type="text" class="form-control main" name="company-name" id="company-name" placeholder="Company Name">
+			</div>
+
+			<div class="col-12 text-center">
+				<button type="submit" class="btn btn-main-md">Register</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+<script>
+	document.getElementById('user-type').addEventListener('change', function() {
+		var companyField = document.getElementById('company-name-field');
+		if (this.value === 'company') {
+			companyField.style.display = 'block';
+		} else {
+			companyField.style.display = 'none';
+		}
+	});
+</script>
