@@ -1,4 +1,6 @@
 <?php
+require_once 'BaseDao.php';
+
 
 class BookingDao extends BaseDao {
     
