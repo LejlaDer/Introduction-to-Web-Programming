@@ -48,4 +48,13 @@ class AttendeeService {
         }
         return $this->attendeeDao->searchAttendees($term);
     }
+
+    public function deleteAttendee($id) {
+    $attendee = $this->attendeeDao->getById($id);
+    if (!$attendee) {
+        throw new Exception("Attendee not found", 404);
+    } 
+    return $this->attendeeDao->delete($id);
+    }
+
 }

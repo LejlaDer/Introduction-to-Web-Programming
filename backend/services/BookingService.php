@@ -57,4 +57,12 @@ class BookingService {
     public function getBookingStatistics() {
         return $this->bookingDao->getBookingStatsByStatus();
     }
+
+    public function deleteBooking($id) {
+    $booking = $this->bookingDao->getById($id);
+    if (!$booking) {
+        throw new Exception("Booking not found", 404);
+    }
+    return $this->bookingDao->delete($id);
+    }
 }

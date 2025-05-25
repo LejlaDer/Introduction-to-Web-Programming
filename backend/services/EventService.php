@@ -74,4 +74,13 @@ class EventService {
         }
         return $this->eventDao->searchEvents($term);
     }
+
+    public function deleteEvent($id) {
+    $event = $this->eventDao->getById($id);
+    if (!$event) {
+        throw new Exception("Event not found", 404);
+    }   
+    return $this->eventDao->delete($id);
+    }
+
 }

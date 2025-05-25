@@ -49,4 +49,12 @@ class PaymentService {
     public function getPaymentStatistics() {
         return $this->paymentDao->getPaymentStatsByStatus();
     }
+
+    public function deletePayment($id) {
+    $payment = $this->paymentDao->getById($id);
+    if (!$payment) {
+        throw new Exception("Payment not found", 404);
+    } 
+    return $this->paymentDao->delete($id);
+    }
 }

@@ -61,4 +61,12 @@ class VenueHallService {
         }
         return $this->venueHallDao->getByMinimumCapacity($capacity);
     }
+
+    public function deleteHall($id) {
+    $hall = $this->venueHallDao->getById($id);
+    if (!$hall) {
+        throw new Exception("Venue hall not found", 404);
+    }
+    return $this->venueHallDao->delete($id);
+    }
 }

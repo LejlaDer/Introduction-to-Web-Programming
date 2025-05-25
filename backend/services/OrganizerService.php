@@ -48,4 +48,12 @@ class OrganizerService {
         }
         return $this->organizerDao->searchOrganizers($term);
     }
+
+    public function deleteOrganizer($id) {
+    $organizer = $this->organizerDao->getById($id);
+    if (!$organizer) {
+        throw new Exception("Organizer not found", 404);
+    }
+    return $this->organizerDao->delete($id);
+    }
 }

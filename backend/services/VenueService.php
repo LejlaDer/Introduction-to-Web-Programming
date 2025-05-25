@@ -54,4 +54,12 @@ class VenueService {
         }
         return $this->venueDao->searchVenues($term);
     }
+
+    public function deleteVenue($id) {
+    $venue = $this->venueDao->getById($id);
+    if (!$venue) {
+        throw new Exception("Venue not found", 404);
+    }
+    return $this->venueDao->delete($id);
+    }
 }
