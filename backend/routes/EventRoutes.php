@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @OA\Get(
  *     path="/events",
@@ -6,7 +7,16 @@
  *     summary="Get all events",
  *     @OA\Response(
  *         response=200,
- *         description="List of all events"
+ *         description="List of all events",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="title", type="string"),
+ *                 @OA\Property(property="date", type="string", format="date")
+ *             )
+ *         )
  *     )
  * )
  */
@@ -27,7 +37,17 @@ Flight::route('GET /events', function() {
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Event data"
+ *         description="Event data",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer"),
+ *             @OA\Property(property="title", type="string"),
+ *             @OA\Property(property="date", type="string", format="date")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Event not found"
  *     )
  * )
  */
@@ -53,8 +73,17 @@ Flight::route('GET /events/@id', function($id) {
  *         )
  *     ),
  *     @OA\Response(
- *         response=200,
- *         description="Event created"
+ *         response=201,
+ *         description="Event created successfully",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer"),
+ *             @OA\Property(property="message", type="string")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Bad request"
  *     )
  * )
  */
@@ -84,7 +113,11 @@ Flight::route('POST /events', function() {
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Event updated"
+ *         description="Event updated successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Event not found"
  *     )
  * )
  */
@@ -106,7 +139,15 @@ Flight::route('PUT /events/@id', function($id) {
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="List of organizer's events"
+ *         description="List of organizer's events",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="title", type="string")
+ *             )
+ *         )
  *     )
  * )
  */
@@ -127,7 +168,15 @@ Flight::route('GET /events/organizer/@organizerId', function($organizerId) {
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="List of venue's events"
+ *         description="List of venue's events",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="title", type="string")
+ *             )
+ *         )
  *     )
  * )
  */
@@ -142,7 +191,15 @@ Flight::route('GET /events/venue/@venueId', function($venueId) {
  *     summary="Get future events",
  *     @OA\Response(
  *         response=200,
- *         description="List of future events"
+ *         description="List of future events",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="title", type="string")
+ *             )
+ *         )
  *     )
  * )
  */
@@ -163,7 +220,15 @@ Flight::route('GET /events/future', function() {
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Search results"
+ *         description="Search results",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 type="object",
+ *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="title", type="string")
+ *             )
+ *         )
  *     )
  * )
  */
@@ -183,10 +248,18 @@ Flight::route('GET /events/search', function() {
  *         required=true,
  *         @OA\Schema(type="integer")
  *     ),
- *     @OA\Response(response=200, description="Event deleted")
+ *     @OA\Response(
+ *         response=200,
+ *         description="Event deleted successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Event not found"
+ *     )
  * )
  */
 Flight::route('DELETE /events/@id', function($id) {
     Flight::json(Flight::eventService()->deleteEvent($id));
 });
+
 ?>
