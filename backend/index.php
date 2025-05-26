@@ -9,13 +9,11 @@ require_once __DIR__ . '/rest/services/PaymentService.php';
 require_once __DIR__ . '/rest/services/VenueService.php';
 require_once __DIR__ . '/rest/services/VenueHallService.php';
 require_once __DIR__ . '/rest/services/AuthService.php';
+require_once __DIR__ . '/middleware/AuthMiddleware.php';
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 Flight::register('attendeeService', 'AttendeeService');
 Flight::register('bookingService', 'BookingService');
@@ -26,7 +24,8 @@ Flight::register('venueService', 'VenueService');
 Flight::register('venueHallService', 'VenueHallService');
 Flight::register('auth_service', "AuthService");
 
-// This wildcard route intercepts all requests and applies authentication checks before proceeding.
+Flight::register('auth_middleware', 'AuthMiddleware');
+
 Flight::route('/*', function() {
    if(
        strpos(Flight::request()->url, '/auth/login') === 0 ||
@@ -36,21 +35,14 @@ Flight::route('/*', function() {
    } else {
        try {
            $token = Flight::request()->getHeader("Authentication");
-           if(!$token)
-               Flight::halt(401, "Missing authentication header");
-
-
-           $decoded_token = JWT::decode($token, new Key(Config::JWT_SECRET(), 'HS256'));
-
-
-           Flight::set('user', $decoded_token->user);
-           Flight::set('jwt_token', $token);
-           return TRUE;
+           if(Flight::auth_middleware()->verifyToken($token))
+               return TRUE;
        } catch (\Exception $e) {
            Flight::halt(401, $e->getMessage());
        }
    }
 });
+
 
 
 require_once __DIR__ . '/rest/routes/AttendeeRoutes.php';
