@@ -1,4 +1,4 @@
-<?php require_once 'config.php'; 
+<?php require_once 'database_config.php'; 
 
 class BaseDao {
     protected $table;
